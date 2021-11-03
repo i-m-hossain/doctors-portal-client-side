@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 
 const Service = ({service}) => {
     return (
-        <Card sx={{ maxWidth: 345, border: 0, boxShadow: 0 }}>
+        <Card sx={{ border: 0, boxShadow: 0 }}>
             <CardMedia
                 component="img"
                 alt="green iguana"
