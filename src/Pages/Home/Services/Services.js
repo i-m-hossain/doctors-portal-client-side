@@ -39,7 +39,7 @@ const Services = () => {
                 <Typography sx={{ fontWeight: 600, mb:8 }} variant="h6" component="div">
                     Services We Provide
                 </Typography>
-                <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
+                <Grid container spacing={{ xs: 2, md: 3 }}>
                     {
                         services.map((service, index) =>
                             <Grid item xs={4} sm={4} md={4} key={index}>
