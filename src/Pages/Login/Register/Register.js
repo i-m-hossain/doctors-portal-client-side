@@ -1,6 +1,6 @@
 import { Alert, Button, CircularProgress, Container, Grid, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
-import { NavLink, useHistory, useLocation } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
 import login from '../../../images/login.png'
 import { BsGoogle } from 'react-icons/bs'
@@ -9,12 +9,12 @@ const Register = () => {
     const { loginWithGoogle, registerWithEmail, isLoading, user, authError } = useAuth()
     const history = useHistory()
 
-    const handleOnChange = (e) => {
+    const handleOnBlur = (e) => {
         const field = e.target.name;
         const value = e.target.value;
 
-        const newLoginData = { ...loginData }
-        newLoginData[field] = value
+        const newLoginData = { ...loginData };
+        newLoginData[field] = value;
         setLoginData(newLoginData)
 
     }
@@ -29,7 +29,7 @@ const Register = () => {
             return;
         }
         if (loginData.email && loginData.password) {
-            registerWithEmail(loginData.email, loginData.password, history)
+            registerWithEmail(loginData.email, loginData.password, loginData.name, history)
         }
 
     }
@@ -46,67 +46,78 @@ const Register = () => {
                     <Typography variant="body1" gutterBottom sx={{ mb: 4, textAlign: 'center' }}>
                         Register
                     </Typography>
-                    
-                        <form onSubmit={handleLoginSubmit}>
-                            <TextField
-                                hiddenLabel
-                                id="filled-hidden-label-small"
-                                label="Email"
-                                variant="standard"
-                                size="small"
-                                sx={{ width: "75%", mb: 2 }}
-                                name="email"
-                                type="email"
-                                onChange={handleOnChange}
-                            />
 
-                            <TextField
-                                hiddenLabel
-                                id="filled-hidden-label-small"
-                                label='Type password'
-                                type="password"
-                                variant="standard"
-                                size="small"
-                                sx={{ width: "75%", mb: 2 }}
-                                name="password"
-                                onChange={handleOnChange}
-                            />
+                    <form onSubmit={handleLoginSubmit}>
+                        <TextField
+                            hiddenLabel
+                            label="Your name"
+                            variant="standard"
+                            size="small"
+                            sx={{ width: "75%", mb: 2 }}
+                            name="name"
+                            type="text"
+                            onBlur={handleOnBlur}
+                        />
 
-                            <TextField
-                                hiddenLabel
-                                id="filled-hidden-label-small"
-                                label="Retype your password"
-                                type="password"
-                                variant="standard"
-                                size="small"
-                                sx={{ width: "75%", mb: 2 }}
-                                name="password2"
-                                onChange={handleOnChange}
-                            />
+                        <TextField
+                            hiddenLabel
+                            
+                            label="Email"
+                            variant="standard"
+                            size="small"
+                            sx={{ width: "75%", mb: 2 }}
+                            name="email"
+                            type="email"
+                            onBlur={handleOnBlur}
+                        />
 
-                            <Button
-                                type="submit"
-                                variant="contained"
-                                sx={{ width: "75%", mb: 2 }}
+                        <TextField
+                            hiddenLabel
+                            
+                            label='Type password'
+                            type="password"
+                            variant="standard"
+                            size="small"
+                            sx={{ width: "75%", mb: 2 }}
+                            name="password"
+                            onBlur={handleOnBlur}
+                        />
 
-                            >
-                                {
-                                    !isLoading ? ' Register' : <CircularProgress style={{color: 'white'}}/>
-                                }
+                        <TextField
+                            hiddenLabel
+                            
+                            label="Retype your password"
+                            type="password"
+                            variant="standard"
+                            size="small"
+                            sx={{ width: "75%", mb: 2 }}
+                            name="password2"
+                            onBlur={handleOnBlur}
+                        />
+
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            sx={{ width: "75%", mb: 2 }}
+
+                        >
+                            {
+                                !isLoading ? ' Register' : <CircularProgress style={{ color: 'white' }} />
+                            }
+                        </Button>
+                        <NavLink to="/login" style={{ textDecoration: 'none' }}>
+                            <Button variant="text">
+                                Already registered? Please login.
                             </Button>
-                            <NavLink to="/login" style={{ textDecoration: 'none' }}>
-                                <Button variant="text">
-                                    Already registered? Please login.
-                                </Button>
-                            </NavLink>
-                        </form>
-                
-                    
+                        </NavLink>
+                    </form>
+
+
                     {
                         user?.email && <Alert severity="success"> User is created successfully</Alert>
                     }
                     {
-                        authError && <div style={{display: 'flex', justifyContent:'center'}}><Alert severity="error" sx={{ width: "75%", mb: 2 }}> {authError.split(':')[1]}</Alert></div>
+                        authError && <div style={{ display: 'flex', justifyContent: 'center' }}><Alert severity="error" sx={{ width: "75%", mb: 2 }}> {authError.split(':')[1]}</Alert></div>
                     }
 
 
