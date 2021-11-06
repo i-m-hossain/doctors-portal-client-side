@@ -6,23 +6,33 @@ import {
 } from "react-router-dom";
 import Home from './Pages/Home/Home/Home';
 import Appointment from './Pages/Appointment/Appointment/Appointment';
-import Navigation from './Pages/Shared/Navigation/Navigation';
-;
+import Login from './Pages/Login/Login/Login';
+import Register from './Pages/Login/Register/Register';
+import AuthProvider from './Pages/Context/AuthProvider';
+import PrivateRoute from './Pages/PrivateRoute/PrivateRoute';
+
 function App() {
   return (
     <div className="App">
-      <Router>
-        <Navigation></Navigation>
-        <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route exact path="/appointment">
-            <Appointment />
-          </Route>
+      <AuthProvider>
+        <Router>
+          <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <PrivateRoute exact path="/appointment">
+              <Appointment />
+            </PrivateRoute>
+            <Route path="/login">
+              <Login></Login>
+            </Route>
+            <Route path="/register">
+              <Register></Register>
+            </Route>
 
-        </Switch>
-      </Router>
+          </Switch>
+        </Router>
+      </AuthProvider>
     </div>
   );
 }

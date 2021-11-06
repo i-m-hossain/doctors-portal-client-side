@@ -33,12 +33,14 @@ const Services = () => {
     return (
         <Box sx={{ flexGrow: 1 }}>
             <Container>
-                <Typography sx={{ fontWeight: 500, color: 'success.main', m:2 }} variant="h6" component="div">
-                    OUR SERVICES
-                </Typography>
-                <Typography sx={{ fontWeight: 600, mb:8 }} variant="h6" component="div">
-                    Services We Provide
-                </Typography>
+                <Box style={{textAlign: "center"}}>
+                    <Typography sx={{ fontWeight: 500, color: 'success.main', m: 2 }} variant="h6" component="div">
+                        OUR SERVICES
+                    </Typography>
+                    <Typography sx={{ fontWeight: 600, mb: 8 }} variant="h6" component="div">
+                        Services We Provide
+                    </Typography>
+                </Box>
                 <Grid container spacing={{ xs: 2, md: 3 }}>
                     {
                         services.map((service, index) =>
