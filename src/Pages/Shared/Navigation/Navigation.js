@@ -6,11 +6,11 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
 
 const Navigation = () => {
-    const {user, logout} = useAuth()
+    const { user, logout } = useAuth()
     console.log(user.displayName);
     return (
         <Box sx={{ flexGrow: 1 }}>
@@ -30,10 +30,15 @@ const Navigation = () => {
                     </Typography>
                     <Link to="/appointment" style={{ textDecoration: 'none' }}><Button color="inherit">APPOINTMENT</Button></Link>
                     {
-                        !user?.email?
-                            <Link to="/login" style={{textDecoration: 'none', color: 'white'}}><Button color="inherit">Login</Button></Link>
+                        !user?.email ?
+                            <Link to="/login" style={{ textDecoration: 'none', color: 'white' }}><Button color="inherit">Login</Button></Link>
                             :
-                            <Button variant="outlined" sx={{ color: "white"}} onClick={logout}>Logout </Button>
+                            <Box>
+                                <NavLink to="/dashboard" style={{ textDecoration: 'none', color: 'white' }}>
+                                    <Button color="inherit">Dashboard</Button>
+                                </NavLink>
+                                <Button variant="outlined" sx={{ color: "white" }} onClick={logout}>Logout </Button>
+                            </Box>
 
                     }
                 </Toolbar>
