@@ -1,7 +1,8 @@
-import { Alert, Container, Grid } from '@mui/material';
+import { Alert, Button, Container, Grid, IconButton, Snackbar } from '@mui/material';
 import React, { useState } from 'react';
 import Booking from '../Booking/Booking';
 import BookingModal from '../BookingModal/BookingModal';
+import CloseIcon from '@mui/icons-material/Close';
 const bookings = [
     {
         id: 1,
@@ -43,12 +44,28 @@ const bookings = [
 
 const AvailableAppointment = ({ date }) => {
     const [bookingSuccess, setBookingSuccess] = useState(false)
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setBookingSuccess(false);
+    };
+    
     return (
         <Container>
             <h2>Available Appointments in {date.toDateString()}</h2>
-            {
-                bookingSuccess && <Alert severity="success" sx={{my:2}}> Your appointment has been placed successfully</Alert>
-            }
+            <Snackbar
+                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                TransitionComponent="Fade"
+                open={bookingSuccess}
+                autoHideDuration={3000}
+                onClose={handleClose}
+            >
+                <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+                    Appointment is placed successfully
+                </Alert>
+            </Snackbar>
+
             <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 12, sm: 12, md: 12 }}>
                 {bookings.map((booking, index) => (
                     <Grid item xs={6} sm={6} md={4} key={index}>
