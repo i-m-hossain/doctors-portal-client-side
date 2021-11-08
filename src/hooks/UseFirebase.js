@@ -17,7 +17,9 @@ const useFirebase = () => {
                 //change state immediately after register
                 const newUser = { email, displayName: name };
                 setUser(newUser)
-                //save user in firebase
+                //save user to database 
+                saveUser(email, name, 'POST')
+                //save user name to firebase after creation
                 updateUserProfile(name)
                 history.push('/')
                 setAuthError('')
@@ -38,6 +40,20 @@ const useFirebase = () => {
             // setAuthError(error.message)
         });
     }
+    //save user to the mongodb database
+    const saveUser = (email, displayName, method) => {
+        const user = { email, displayName }
+        fetch('http://localhost:5000/users', {
+            method: method,
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+            .then(res => res.json())
+            .then(data => console.log('mongodb saved', data))
+
+    }
     //observe user state
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -51,6 +67,8 @@ const useFirebase = () => {
         });
         return () => unsubscribe;
     }, [])
+
+    //login with login form
     const loginWithEmail = (email, password, location, history) => {
         setIsLoading(true)
         signInWithEmailAndPassword(auth, email, password)
@@ -71,6 +89,8 @@ const useFirebase = () => {
         setIsLoading(true)
         signInWithPopup(auth, provider)
             .then(result => {
+                const user = result.user;
+                saveUser(user.email, user.displayName, 'PUT')
                 const destination = location?.state?.from || '/';
                 history.replace(destination)
                 setAuthError('')

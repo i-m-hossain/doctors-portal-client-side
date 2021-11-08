@@ -20,54 +20,38 @@ import { AiOutlineCalendar } from 'react-icons/ai'
 import { FiSettings } from 'react-icons/fi'
 import { MdOutlineNoteAdd } from 'react-icons/md'
 import { BsPeopleFill } from 'react-icons/bs'
-import { Grid } from '@mui/material';
+import { Button, Grid } from '@mui/material';
 import Calender from '../../Shared/Calendar/Calender';
 import Appointments from '../Appointments/Appointments';
+import { Link } from 'react-router-dom';
 
 const drawerWidth = 200;
 
 function Dashboard(props) {
     const { window } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
+    const [date, setDate] = React.useState(new Date())
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
-    const drawerItems = [
-        {
-            name: 'DashBoard',
-            icon: MdDashboard
-        },
-        {
-            name: 'Appointment',
-            icon: AiOutlineCalendar
-        },
-        {
-            name: 'Patients',
-            icon: BsPeopleFill
-        },
-        {
-            name: 'Prescriptions',
-            icon: MdOutlineNoteAdd
-        },
-        {
-            name: 'Setting',
-            icon: FiSettings
-        }
-    ]
+    // const icons = ['MdDashboard', 'AiOutlineCalendar', 'FiSettings', 'MdOutlineNoteAdd', 'BsPeopleFill' ]
     const drawer = (
         <div>
             <Toolbar />
             <Divider />
             <List>
-                {drawerItems.map((text, index) => (
-
+                <ListItem button>
+                    <ListItemText>
+                        <Link to="/appointment">Appointment</Link>
+                    </ListItemText>
+                </ListItem>
+                {['DashBoard', 'Appointment', 'Patients', 'Prescriptions', 'Setting'].map((text, index) => (
                     <ListItem button key={text}>
-
                         <ListItemIcon>
-                            {text.icon}
+                            
                         </ListItemIcon>
-                        <ListItemText primary={text.name} />
+                        <ListItemText primary={text} />
                     </ListItem>
                 ))}
             </List>
@@ -141,11 +125,11 @@ function Dashboard(props) {
                 <Toolbar />
                 <Grid container spacing={{ xs: 2, md: 3 }}>
 
-                    <Grid item xs={12} md={8} >
-                        <Calender></Calender>
+                    <Grid item xs={12} md={5} >
+                        <Calender date={date} setDate={setDate}></Calender>
                     </Grid>
-                    <Grid item xs={12} md={4}>
-                        <Appointments></Appointments>,
+                    <Grid item xs={12} md={7}>
+                        <Appointments date={date}></Appointments>,
                     </Grid>
 
                 </Grid>
