@@ -15,23 +15,29 @@ import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { MdDashboard } from 'react-icons/md'
-import { AiOutlineCalendar } from 'react-icons/ai'
-import { FiSettings } from 'react-icons/fi'
-import { MdOutlineNoteAdd } from 'react-icons/md'
-import { BsPeopleFill } from 'react-icons/bs'
-import { Button, Grid } from '@mui/material';
-import Calender from '../../Shared/Calendar/Calender';
-import Appointments from '../Appointments/Appointments';
-import { Link } from 'react-router-dom';
-
+import { MdDashboard } from 'react-icons/md';
+import { AiOutlineCalendar } from 'react-icons/ai';
+import { FiSettings } from 'react-icons/fi';
+import { MdOutlineNoteAdd } from 'react-icons/md';
+import { BsPeopleFill } from 'react-icons/bs';
+import DashboardHome from '../DashboardHome/DashboardHome';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link,
+    useParams,
+    useRouteMatch
+} from "react-router-dom";
+import { Button } from '@mui/material';
+import MakeAdmin from '../MakeAdmin/MakeAdmin';
+import AddDoctor from '../AddDoctor/AddDoctor';
 const drawerWidth = 200;
 
 function Dashboard(props) {
+    let { path, url } = useRouteMatch();
     const { window } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
-    const [date, setDate] = React.useState(new Date())
-
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
@@ -40,12 +46,11 @@ function Dashboard(props) {
         <div>
             <Toolbar />
             <Divider />
+            <Link to="/appointment"><Button color="inherit">Appointment</Button></Link>
+            <Link to={`${url}`}><Button color="inherit">Dashboard</Button></Link>
+            <Link to={`${url}/makeAdmin`}><Button color="inherit">Make Admin</Button></Link>
+            <Link to={`${url}/addDoctor`}><Button color="inherit">Add Doctor</Button></Link>
             <List>
-                <ListItem button>
-                    <ListItemText>
-                        <Link to="/appointment">Appointment</Link>
-                    </ListItemText>
-                </ListItem>
                 {['DashBoard', 'Appointment', 'Patients', 'Prescriptions', 'Setting'].map((text, index) => (
                     <ListItem button key={text}>
                         <ListItemIcon>
@@ -123,16 +128,18 @@ function Dashboard(props) {
                 sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
             >
                 <Toolbar />
-                <Grid container spacing={{ xs: 2, md: 3 }}>
-
-                    <Grid item xs={12} md={5} >
-                        <Calender date={date} setDate={setDate}></Calender>
-                    </Grid>
-                    <Grid item xs={12} md={7}>
-                        <Appointments date={date}></Appointments>,
-                    </Grid>
-
-                </Grid>
+                <Switch>
+                    <Route exact path={path}>
+                        <DashboardHome></DashboardHome>
+                    </Route>
+                    <Route path={`${path}/makeAdmin`}>
+                        <MakeAdmin></MakeAdmin>
+                    </Route>
+                    <Route path={`${path}/addDoctor`}>
+                        <AddDoctor></AddDoctor>
+                    </Route>
+                </Switch>
+                
 
             </Box>
         </Box>
