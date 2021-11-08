@@ -8,16 +8,15 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Button } from '@mui/material';
-import CircularProgress from '@mui/material/CircularProgress';
-import Box from '@mui/material/Box';
 
-const Appointments = ({date}) => {
+
+const Appointments = ({ date }) => {
     const { user, token } = useAuth()
     const [appointments, setAppointments] = useState([])
     useEffect(() => {
-        const url = `http://localhost:5000/appointments?email=${user.email}&date=${date}`
-        
-        fetch(url,{
+        const url = `https://radiant-stream-52438.herokuapp.com/appointments?email=${user.email}&date=${date.toLocaleDateString()}`
+
+        fetch(url, {
             headers: {
                 'authorization': `Bearer ${token}`
             }
@@ -26,8 +25,8 @@ const Appointments = ({date}) => {
             .then(data => {
                 setAppointments(data)
             })
-    }, [date])
-     
+    }, [date, user.email, token])
+
     return (
         <div>
             <h3>Appoinments </h3>

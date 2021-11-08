@@ -5,8 +5,6 @@ import avatar1 from '../../../../images/people-1.png';
 import avatar2 from '../../../../images/people-2.png';
 import avatar3 from '../../../../images/people-3.png';
 import TestimonialItem from '../TestimonialItem/TestimonialItem';
-import bg from '../../../../images/quote-inverted.png'
-
 
 const testimonials = [
     {
@@ -31,10 +29,7 @@ const testimonials = [
         address: 'califoria'
     },
 ]
-// const testimonial = {
-//     background: `url(${bg}) no-repeat fixed right`,
-    
-// }
+
 
 const Testimonials = () => {
     return (

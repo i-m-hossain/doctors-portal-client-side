@@ -14,7 +14,7 @@ const footer ={
 }
 const Footer = () => {
     return (
-        <Container sx={{ flexGrow: 1 }} style={footer} sx={{color: 'text.disabled'}}>
+        <Container sx={{ flexGrow: 1, color: 'text.disabled' }} style={footer} >
             <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 12, md: 12 }}>
                 <Grid item xs={12} md={3} sx={{mt:8}}>
                     <Typography variant="body2" sx={{textAlign: 'left'}}>

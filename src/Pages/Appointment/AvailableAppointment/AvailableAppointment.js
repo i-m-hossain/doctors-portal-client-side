@@ -1,8 +1,6 @@
-import { Alert, Button, Container, Grid, IconButton, Snackbar } from '@mui/material';
+import { Alert, Container, Grid, Snackbar } from '@mui/material';
 import React, { useState } from 'react';
 import Booking from '../Booking/Booking';
-import BookingModal from '../BookingModal/BookingModal';
-import CloseIcon from '@mui/icons-material/Close';
 const bookings = [
     {
         id: 1,

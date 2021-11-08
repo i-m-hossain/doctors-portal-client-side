@@ -23,7 +23,7 @@ const BookingModal = ({ openBooking, handleBookingClose, booking, date, setBooki
     const { user } = useAuth()
     const initialInfo = { patientName: user.displayName, email: user.email, phone: '' }
     const [bookingInfo, setBookingInfo] = useState(initialInfo)
-    
+
 
     const handleOnBlur = (e) => {
         const field = e.target.name;
@@ -42,16 +42,16 @@ const BookingModal = ({ openBooking, handleBookingClose, booking, date, setBooki
             date: date.toLocaleDateString()
         }
         //send data to the server
-        axios.post('http://localhost:5000/appointments', appointment)
+        axios.post('https://radiant-stream-52438.herokuapp.com/appointments', appointment)
             .then(res => {
-                if (res.data.insertedId){
+                if (res.data.insertedId) {
                     handleBookingClose()
                     setBookingSuccess(true)
                 };
             })
-            .catch(error=> console.log(error))
+            .catch(error => console.log(error))
 
-        
+
         e.preventDefault()
 
     }

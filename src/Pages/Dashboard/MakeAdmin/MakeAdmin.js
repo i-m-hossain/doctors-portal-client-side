@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import axios from 'axios'
-import { Alert, Container, Grid, IconButton, Snackbar } from '@mui/material';
+import { Alert, Snackbar } from '@mui/material';
 import useAuth from '../../../hooks/useAuth';
 
 const MakeAdmin = () => {
@@ -18,8 +17,8 @@ const MakeAdmin = () => {
     const handleOnSubmit = (e) => {
         e.preventDefault()
         const user = { email }
-        fetch('http://localhost:5000/users/admin', {
-            method:'PUT',
+        fetch('https://radiant-stream-52438.herokuapp.com/users/admin', {
+            method: 'PUT',
             headers: {
                 'authorization': `Bearer ${token}`,
                 'content-type': 'application/json'
@@ -27,7 +26,7 @@ const MakeAdmin = () => {
             body: JSON.stringify(user)
         })
             .then(res => res.json())
-            .then(data =>{
+            .then(data => {
                 console.log(data);
                 if (data.modifiedCount) {
                     setSuccess(true)

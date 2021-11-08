@@ -46,7 +46,7 @@ const useFirebase = () => {
     //save user to the mongodb database
     const saveUser = (email, displayName, method) => {
         const user = { email, displayName }
-        fetch('http://localhost:5000/users', {
+        fetch('https://radiant-stream-52438.herokuapp.com/users', {
             method: method,
             headers: {
                 'content-type': 'application/json'
@@ -63,7 +63,7 @@ const useFirebase = () => {
             if (user) {
                 setUser(user)
                 getIdToken(user)
-                    .then(idToken=>{
+                    .then(idToken => {
                         setToken(idToken);
                     })
 
@@ -73,7 +73,7 @@ const useFirebase = () => {
             setIsLoading(false)
         });
         return () => unsubscribe;
-    }, [])
+    }, [auth])
 
     //login with login form
     const loginWithEmail = (email, password, location, history) => {
@@ -120,7 +120,7 @@ const useFirebase = () => {
     }
     // finding a user is admin or not and user.email is put as depency of useEffect as user can be changed as well as their admin status
     useEffect(() => {
-        axios.get(`http://localhost:5000/users?email=${user.email}`)
+        axios.get(`https://radiant-stream-52438.herokuapp.com/users?email=${user.email}`)
             .then(res => setAdmin(res.data.admin))
     }, [user.email])
     return {
