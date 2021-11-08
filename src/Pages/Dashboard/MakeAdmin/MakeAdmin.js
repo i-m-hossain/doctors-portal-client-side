@@ -3,7 +3,10 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import axios from 'axios'
 import { Alert, Container, Grid, IconButton, Snackbar } from '@mui/material';
+import useAuth from '../../../hooks/useAuth';
+
 const MakeAdmin = () => {
+    const { token } = useAuth()
     const [email, setEmail] = useState('');
     const [success, setSuccess] = useState(false)
     const [error, setError] = useState(false)
@@ -15,10 +18,18 @@ const MakeAdmin = () => {
     const handleOnSubmit = (e) => {
         e.preventDefault()
         const user = { email }
-        axios.put('http://localhost:5000/users/admin', user)
-            .then(res => {
-
-                if (res.data.modifiedCount) {
+        fetch('http://localhost:5000/users/admin', {
+            method:'PUT',
+            headers: {
+                'authorization': `Bearer ${token}`,
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+            .then(res => res.json())
+            .then(data =>{
+                console.log(data);
+                if (data.modifiedCount) {
                     setSuccess(true)
                 } else {
                     setError(true)

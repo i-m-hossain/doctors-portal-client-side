@@ -1,4 +1,5 @@
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, updateProfile } from "firebase/auth";
+import axios from "axios";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, updateProfile, getIdToken } from "firebase/auth";
 import { useEffect, useState } from "react";
 import initAuth from "../Pages/Firebase/firebase.init";
 initAuth()
@@ -8,6 +9,8 @@ const useFirebase = () => {
     const [isLoading, setIsLoading] = useState(true)
     const auth = getAuth();
     const [authError, setAuthError] = useState('')
+    const [admin, setAdmin] = useState(false)
+    const [token, setToken] = useState('')
 
     //login with email and password
     const registerWithEmail = (email, password, name, history) => {
@@ -59,6 +62,10 @@ const useFirebase = () => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
                 setUser(user)
+                getIdToken(user)
+                    .then(idToken=>{
+                        setToken(idToken);
+                    })
 
             } else {
                 setUser({})
@@ -111,8 +118,15 @@ const useFirebase = () => {
             })
             .finally(() => setIsLoading(false));
     }
+    // finding a user is admin or not and user.email is put as depency of useEffect as user can be changed as well as their admin status
+    useEffect(() => {
+        axios.get(`http://localhost:5000/users?email=${user.email}`)
+            .then(res => setAdmin(res.data.admin))
+    }, [user.email])
     return {
         user,
+        admin,
+        token,
         registerWithEmail,
         loginWithEmail,
         loginWithGoogle,
