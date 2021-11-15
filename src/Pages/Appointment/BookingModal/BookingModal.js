@@ -39,6 +39,7 @@ const BookingModal = ({ openBooking, handleBookingClose, booking, date, setBooki
             ...bookingInfo,
             time: booking.time,
             serviceName: booking.name,
+            price: booking.price,
             date: date.toLocaleDateString()
         }
         //send data to the server
@@ -64,9 +65,14 @@ const BookingModal = ({ openBooking, handleBookingClose, booking, date, setBooki
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <Typography id="modal-modal-title" variant="h6" component="h2">
-                        {booking.name}
-                    </Typography>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <Typography id="modal-modal-title" variant="h6" component="h2">
+                            {booking.name}
+                        </Typography>
+                        <Typography sx={{ pr: 4 }} variant="h6" component="h2">
+                            Price: ${booking.price}
+                        </Typography>
+                    </Box>
                     <form onSubmit={handleBookSubmit}>
                         <TextField
                             disabled

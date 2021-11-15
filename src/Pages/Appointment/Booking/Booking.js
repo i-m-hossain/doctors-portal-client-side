@@ -20,6 +20,9 @@ const Booking = ({ booking, date, setBookingSuccess }) => {
                 <Typography variant="caption" display="block" gutterBottom>
                     Available sits: {booking.space}
                 </Typography>
+                <Typography variant="caption" display="block" gutterBottom>
+                    Price: ${booking.price}
+                </Typography>
                 <Button variant="contained" onClick={handleBookingOpen}> BOOK APPOINTMENT </Button>
             </Paper>
             <BookingModal
