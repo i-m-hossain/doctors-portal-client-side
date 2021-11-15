@@ -19,9 +19,11 @@ const Payment = () => {
             <Typography variant="caption" display="block" gutterBottom>
                 Price: ${appointment.price}
             </Typography>
-            <Checkout
-                appointment={appointment}
-            ></Checkout>
+            {
+                appointment.price && <Checkout
+                    appointment={appointment}
+                />
+            }
         </div>
     );
 };
