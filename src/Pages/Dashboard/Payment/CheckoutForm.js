@@ -1,10 +1,13 @@
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import React from 'react';
+import { useState } from 'react'
 
 
-const CheckoutForm = ({ appointment}) => {
+const CheckoutForm = ({ appointment }) => {
+    const { price } = appointment
     const stripe = useStripe();
     const elements = useElements();
+    const [error, setError] = useState('')
 
     const handleSubmit = async (event) => {
         // Block native form submission.
@@ -33,33 +36,42 @@ const CheckoutForm = ({ appointment}) => {
 
         if (error) {
             console.log('[error]', error);
+            setError(error.message)
         } else {
             console.log('[PaymentMethod]', paymentMethod);
+            setError('')
+
         }
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <CardElement
-                options={{
-                    style: {
-                        base: {
-                            fontSize: '16px',
-                            color: '#424770',
-                            '::placeholder': {
-                                color: '#aab7c4',
+        <>
+            {
+                error && <h4 style={{ color: 'red' }}>{error}</h4>
+            }
+            <form onSubmit={handleSubmit}>
+                <CardElement
+                    options={{
+                        style: {
+                            base: {
+                                fontSize: '16px',
+                                color: '#424770',
+                                '::placeholder': {
+                                    color: '#aab7c4',
+                                },
+                            },
+                            invalid: {
+                                color: '#9e2146',
                             },
                         },
-                        invalid: {
-                            color: '#9e2146',
-                        },
-                    },
-                }}
-            />
-            <button type="submit" disabled={!stripe}>
-                Pay
-            </button>
-        </form>
+                    }}
+                />
+                <button type="submit" disabled={!stripe}>
+                    Pay ${price}
+                </button>
+            </form>
+        </>
+
     );
 };
 export default CheckoutForm;
