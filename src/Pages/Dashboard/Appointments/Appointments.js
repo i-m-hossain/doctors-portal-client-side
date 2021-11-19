@@ -53,7 +53,15 @@ const Appointments = ({ date }) => {
                                 <TableCell align="center"> {appointment.serviceName}</TableCell>
                                 <TableCell align="center"> {appointment.time}</TableCell>
                                 <TableCell align="center">
-                                    <Button variant="contained" > {appointment.payment ? 'Paid' : <Link to={`/dashboard/payment/${appointment._id}`} style={{ color: '#fff' }} >  Pay</Link>} </Button>
+                                    {
+                                        appointment.payment ?
+                                            'Paid'
+                                            :
+                                            <Button variant="contained" >
+                                                <Link to={`/dashboard/payment/${appointment._id}`} style={{ color: '#fff' }} >  Pay
+                                                </Link>
+                                            </Button>
+                                    }
                                 </TableCell>
 
                             </TableRow>

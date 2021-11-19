@@ -6,7 +6,7 @@ import { CircularProgress } from '@mui/material';
 
 
 const CheckoutForm = ({ appointment }) => {
-    const { price, patientName } = appointment
+    const { _id, price, patientName } = appointment
     const { user } = useAuth()
     const stripe = useStripe();
     const elements = useElements();
@@ -85,12 +85,31 @@ const CheckoutForm = ({ appointment }) => {
         if (intentError) {
             setError(intentError.message)
             setSuccess(false)
+            setProcessing(false)
 
         } else {
             setError('');
             console.log("paymentIntent", paymentIntent);
             setSuccess(true)
             setProcessing(false)
+
+            //save to database
+            const url = `http://localhost:5000/appointments/${_id}`
+            const payment = {
+                amount: paymentIntent.amount,
+                last4: paymentMethod.card.last4,
+                createdAt: paymentIntent.created,
+                transaction: paymentIntent.client_secret.split('_secret')[0]
+            }
+            fetch(url, {
+                method: 'PUT',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify(payment)
+            })
+                .then(res => res.json())
+                .then(data => console.log(data))
 
         }
     };
@@ -120,9 +139,15 @@ const CheckoutForm = ({ appointment }) => {
                         },
                     }}
                 />
-                {processing ? <CircularProgress></CircularProgress> : <button type="submit" disabled={!stripe}>
-                    Pay ${price}
-                </button>}
+                {
+                    processing
+                        ?
+                        <CircularProgress></CircularProgress>
+                        :
+                        <button type="submit" disabled={!stripe || success}>
+                            Pay ${price}
+                        </button>
+                }
             </form>
         </>
 

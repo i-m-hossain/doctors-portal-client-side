@@ -26,6 +26,7 @@ import AddDoctor from '../AddDoctor/AddDoctor';
 import useAuth from '../../../hooks/useAuth';
 import AdminRoute from '../../Login/AdminRoute/AdminRoute';
 import Payment from '../Payment/Payment';
+import AddPeople from '../AddPeople/AddPeople';
 const drawerWidth = 200;
 
 function Dashboard(props) {
@@ -48,6 +49,7 @@ function Dashboard(props) {
                 admin && <Box>
                     <Link to={`${url}/makeAdmin`}><Button color="inherit">Make Admin</Button></Link>
                     <Link to={`${url}/addDoctor`}><Button color="inherit">Add Doctor</Button></Link>
+                    <Link to={`${url}/addPeople`}><Button color="inherit">Add People</Button></Link>
                 </Box>
             }
             <List>
@@ -140,6 +142,9 @@ function Dashboard(props) {
                     </AdminRoute>
                     <AdminRoute path={`${path}/addDoctor`}>
                         <AddDoctor></AddDoctor>
+                    </AdminRoute>
+                    <AdminRoute path={`${path}/addPeople`}>
+                        <AddPeople></AddPeople>
                     </AdminRoute>
                 </Switch>
 
