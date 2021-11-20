@@ -1,13 +1,13 @@
 import { Alert, Button, CircularProgress, Container, Grid, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
-import { NavLink, useHistory } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
 import login from '../../../images/login.png'
 import { BsGoogle } from 'react-icons/bs'
 const Register = () => {
     const [loginData, setLoginData] = useState({})
     const { loginWithGoogle, registerWithEmail, isLoading, user, authError } = useAuth()
-    const history = useHistory()
+    const navigate = useNavigate()
 
     const handleOnBlur = (e) => {
         const field = e.target.name;
@@ -29,12 +29,12 @@ const Register = () => {
             return;
         }
         if (loginData.email && loginData.password) {
-            registerWithEmail(loginData.email, loginData.password, loginData.name, history)
+            registerWithEmail(loginData.email, loginData.password, loginData.name, navigate)
         }
 
     }
     const handleLoginWithGoogle = () => {
-        loginWithGoogle(history)
+        loginWithGoogle(navigate)
     }
 
     return (
@@ -61,7 +61,7 @@ const Register = () => {
 
                         <TextField
                             hiddenLabel
-                            
+
                             label="Email"
                             variant="standard"
                             size="small"
@@ -73,7 +73,7 @@ const Register = () => {
 
                         <TextField
                             hiddenLabel
-                            
+
                             label='Type password'
                             type="password"
                             variant="standard"
@@ -85,7 +85,7 @@ const Register = () => {
 
                         <TextField
                             hiddenLabel
-                            
+
                             label="Retype your password"
                             type="password"
                             variant="standard"

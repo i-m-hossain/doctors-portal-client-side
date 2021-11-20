@@ -4,13 +4,13 @@ import { NavLink } from 'react-router-dom';
 import login from '../../../images/login.png'
 import { BsGoogle } from 'react-icons/bs'
 import useAuth from '../../../hooks/useAuth';
-import { useLocation, useHistory } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const Login = () => {
     const { loginWithGoogle, loginWithEmail, user, isLoading, authError } = useAuth()
     const [loginData, setLoginData] = useState({})
     const location = useLocation()
-    const history = useHistory()
+    const navigate = useNavigate()
 
     const handleOnChange = (e) => {
         const field = e.target.name;
@@ -27,12 +27,12 @@ const Login = () => {
             return;
         }
         if (loginData.email && loginData.password) {
-            loginWithEmail(loginData.email, loginData.password, location, history)
+            loginWithEmail(loginData.email, loginData.password, location, navigate)
         }
 
     }
     const handleLoginWithGoogle = () => {
-        loginWithGoogle(history, location)
+        loginWithGoogle(navigate, location)
     }
 
     return (
@@ -59,21 +59,21 @@ const Login = () => {
                             variant="standard" />
 
                         <Button sx={{ width: '75%', m: 1 }} type="submit" variant="contained">{
-                            !isLoading ? 'Login' : <CircularProgress style={{color: 'white'}} />
+                            !isLoading ? 'Login' : <CircularProgress style={{ color: 'white' }} />
                         }</Button>
                         <NavLink
                             style={{ textDecoration: 'none' }}
                             to="/register">
                             <Button variant="text">New User? Please Register</Button>
                         </NavLink>
-                        
+
                         {user?.email && <Alert severity="success">Login successfully!</Alert>}
                         {authError && <Alert severity="error">{authError}</Alert>}
                     </form>
                     <p>-----------OR-----------</p>
                     <Button variant="contained" onClick={handleLoginWithGoogle} sx={{ width: "75%", bgcolor: 'primary.main' }}> <BsGoogle style={{ color: '#DB4437', marginRight: "10px" }} /> Login with Google</Button>
                 </Grid>
-           
+
                 <Grid item xs={12} md={6}>
                     <img src={login} alt="" style={{ width: "100%" }} />
                 </Grid>

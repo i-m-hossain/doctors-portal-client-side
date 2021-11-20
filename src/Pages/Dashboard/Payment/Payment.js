@@ -8,7 +8,7 @@ const Payment = () => {
     const { appointmentId } = useParams()
     const [appointment, setAppointment] = useState({})
     useEffect(() => {
-        axios.get(`http://localhost:5000/appointments/${appointmentId}`)
+        axios.get(`https://radiant-stream-52438.herokuapp.com/appointments/${appointmentId}`)
             .then(res => setAppointment(res.data))
 
     })

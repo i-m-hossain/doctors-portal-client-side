@@ -15,7 +15,7 @@ const CheckoutForm = ({ appointment }) => {
     const [success, setSuccess] = useState(false)
     const [processing, setProcessing] = useState(false)
     useEffect(() => {
-        fetch('http://localhost:5000/create-payment-intent', {
+        fetch('https://radiant-stream-52438.herokuapp.com/create-payment-intent', {
             method: 'POST',
             headers: {
                 'content-type': 'applicatIon/json'
@@ -94,7 +94,7 @@ const CheckoutForm = ({ appointment }) => {
             setProcessing(false)
 
             //save to database
-            const url = `http://localhost:5000/appointments/${_id}`
+            const url = `https://radiant-stream-52438.herokuapp.com/appointments/${_id}`
             const payment = {
                 amount: paymentIntent.amount,
                 last4: paymentMethod.card.last4,

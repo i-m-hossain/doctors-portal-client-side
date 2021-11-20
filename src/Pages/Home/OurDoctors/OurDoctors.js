@@ -7,7 +7,7 @@ import axios from 'axios';
 const OurDoctors = () => {
     const [doctors, setDoctors] = useState([])
     useEffect(() => {
-        const url = `http://localhost:5000/doctors`
+        const url = `https://radiant-stream-52438.herokuapp.com/doctors`
         axios.get(url)
             .then(res => setDoctors(res.data))
     }, [])
